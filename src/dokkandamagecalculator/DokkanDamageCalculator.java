@@ -1,10 +1,20 @@
 
-package dokkandamagecalculator;
+
 //Homework 15
+//The name of this app is called Dragon Ball Z Dokkan Battle
 //Steven Eivaz and Alec Peterson
 //Code partially taken from some inclass examples, Textpad/Linedraw etc
 //The following is a calculator to determine an "Attack Stat" for certain characters
 //Various multipliers and modifiers exist in the game, and this tool applies them in the correct order
+//So, for an example, you have a card(The characters are called cards for some reason), has an attack stat of say
+// 17870 and does colossal damage.  His passive is attack * 150, and has a basic sa multiplyer.  So the way that this works
+// is that you have a leader skill that buffs the team.  Any of the relavent ones range from 120-170.  So that number is multiplied
+// by 150, then its own passive skill, which is also attack * 150.  Finally, since it does colossal damage, you multiply that 
+// by whatever the number is for that stat, which is coded in under the in game names.  That would end up being the final attack stat 
+// before any enemies defense.  Alec did a lot of the menu with all of the menu items, and the get and set functions, and Steven did most of the buttons, as well
+// as optimizing it to be able to work.  A future optimization to make would be to take into account other support units, 
+// as well as enemy defense.  We wanted to support binary and text serialization, but unfortunately we were unable to get them to work.
+
 
 
 
@@ -60,7 +70,7 @@ class PointIO {  //Taken from the class example, but unfortunately will not work
 	}
 }
 
-class TxtPd extends JFrame{  // The main function that allows the program to work.
+class Calc extends JFrame{  // The main function that allows the program to work.
     public String str;
     public String strs;
     public String strss;
@@ -74,7 +84,7 @@ class TxtPd extends JFrame{  // The main function that allows the program to wor
         this.damage = damage;
  }
 
-    public void TextPad(){  
+    public void CalcPad(){  
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle("Dokkan Battle Damage Calculator");
     setBounds(300,300,300,300);
@@ -241,7 +251,7 @@ class TxtPd extends JFrame{  // The main function that allows the program to wor
                         );
     f.setLayout(new GridLayout(3,4));  
     f.setSize(300,300);  
-    f.setVisible(true);  
+    f.setVisible(true);  //Here is where all of the buttons are added
     f.add(N1);
     f.add(N2);
     f.add(N3);
@@ -433,22 +443,34 @@ class TxtPd extends JFrame{  // The main function that allows the program to wor
                                 text.repaint();
 			}
 		});
+                JMenuItem miExport = new JMenuItem("Export");
+                miP150.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int a = Integer.parseInt(strs);
+                                damage = a * 430;
+                                String st = Integer.toString( damage);
+                                strss = st;
+                                text.getText();
+                                text.setText( strss );
+                                text.repaint();
+			}
+		});
                 mnuPassive.add(miP90);
                 mnuPassive.add(miP120);
                 mnuPassive.add(miP130);
                 mnuPassive.add(miP150);
-                
+                mnuFile.add(miExport);
 		setJMenuBar(bar);
-}
+}  // Here were all of the buttons for leader, passive, and sa multiplyer.  This let us build a majority of the program
     
-    public TxtPd(){
-        TextPad();
+    public Calc(){
+        CalcPad();
     }
 }
 
     public class DokkanDamageCalculator{
-            public static void main(String[] args) {  // The main function that calls the textpad function.
-                        TxtPd bt = new TxtPd();
+            public static void main(String[] args) {  // The main function that calls the Calcpad function.
+                        Calc bt = new Calc();
                         bt.setVisible(true);  
 }  
 }
